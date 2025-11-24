@@ -124,10 +124,3 @@ def attendance(batch_number):
 
     # Render the attendance page
     return render_template('attendance.html', batch_number=batch_number)
-
-
-if __name__ == '__main__':
-    # Run the Flask application
-    # Debug mode is enabled only if the FLASK_DEBUG environment variable is set to '1'
-    debug_mode = os.environ.get('FLASK_DEBUG') == '1'
-    app.run(debug=debug_mode)

@@ -22,6 +22,7 @@ This is a simple web-based attendance system that uses QR codes to streamline th
 │   └── index.html
 ├── app.py
 ├── requirements.txt
+├── Dockerfile
 └── README.md
 ```
 
@@ -29,6 +30,7 @@ This is a simple web-based attendance system that uses QR codes to streamline th
 - **`templates/`**: This directory contains the HTML templates for the web pages.
 - **`app.py`**: This is the main Flask application file that contains the backend logic.
 - **`requirements.txt`**: This file lists the Python libraries required to run the application.
+- **`Dockerfile`**: This file contains the instructions to build a Docker image of the application.
 - **`README.md`**: This file provides an overview of the project.
 
 ## Setup and Usage
@@ -40,12 +42,9 @@ This is a simple web-based attendance system that uses QR codes to streamline th
 
 ### Installation
 
-1.  **Clone the repository:**
+1.  **Get the code:**
 
-    ```bash
-    git clone https://github.com/your-username/qr-code-attendance-system.git
-    cd qr-code-attendance-system
-    ```
+    Ensure you have the project files on your local machine.
 
 2.  **Install the dependencies:**
 
@@ -58,12 +57,12 @@ This is a simple web-based attendance system that uses QR codes to streamline th
 1.  **Start the Flask server:**
 
     ```bash
-    python3 app.py
+    gunicorn --workers 1 --bind 0.0.0.0:8000 app:app
     ```
 
 2.  **Access the application:**
 
-    Open your web browser and navigate to `http://127.0.0.1:5000`.
+    Open your web browser and navigate to `http://127.0.0.1:8000`.
 
 ### How to Use
 
@@ -76,6 +75,43 @@ This is a simple web-based attendance system that uses QR codes to streamline th
     -   This will open a web page with a form to enter the student ID.
     -   Enter the student ID and click "Mark Attendance".
     -   The attendance will be recorded in the corresponding Excel file in the `attendance_sheets` directory.
+
+## Deployment
+
+This application can be easily deployed using Docker.
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/)
+
+### Build the Docker Image
+
+1.  **Navigate to the project directory.**
+
+2.  **Build the image:**
+
+    ```bash
+    docker build -t qr-attendance-system .
+    ```
+
+### Run the Docker Container
+
+1.  **Run the container:**
+
+    ```bash
+    docker run -d -p 8000:8000 -v "$(pwd)/attendance_sheets":/app/attendance_sheets qr-attendance-system
+    ```
+
+    This command will:
+    -   Run the container in detached mode (in the background).
+    -   Map port 8000 of the container to port 8000 on your local machine.
+    -   Mount the `attendance_sheets` directory from your local machine into the container. This ensures that the attendance data is persisted even if the container is stopped or removed.
+
+    **Note for Windows Users:** The `$(pwd)` syntax is for Linux and macOS. If you are using Windows Command Prompt, replace `$(pwd)` with the full path to your project directory (e.g., `C:\Users\YourUser\qr-code-attendance-system`).
+
+2.  **Access the application:**
+
+    Open your web browser and navigate to `http://localhost:8000`.
 
 ## Contributing
 

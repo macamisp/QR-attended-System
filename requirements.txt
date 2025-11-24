@@ -3,3 +3,4 @@ openpyxl
 qrcode
 Pillow
 filelock
+gunicorn
