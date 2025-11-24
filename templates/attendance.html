@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mark Attendance</title>
+</head>
+<body>
+    <h1>Mark Attendance for Batch: {{ batch_number }}</h1>
+    <form method="POST" action="/attendance/{{ batch_number }}">
+        <label for="student_id">Enter Student ID:</label>
+        <input type="text" id="student_id" name="student_id" required>
+        <button type="submit">Mark Attendance</button>
+    </form>
+</body>
+</html>
